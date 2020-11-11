@@ -45,7 +45,7 @@ public class GUI extends javax.swing.JFrame {
 
         jLabel1.setText("Ingrese una expresión lógica en infijo");
 
-        jLabel2.setText("Puede utilizar los operandos p, q, r, s y t");
+        jLabel2.setText("Puede utilizar los operandos p, q, r, s y t.");
 
         jLabel3.setText("Puede utilizar los siguientes operadores:");
 
@@ -123,9 +123,10 @@ public class GUI extends javax.swing.JFrame {
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         PostfixConverter converter = new PostfixConverter();
         Queue postfix = converter.toPostfix(txtIn.getText());
-        areaOut.append("Los operadores son " + converter.getOperators() + "\n");
-        areaOut.append("Los operandos son " + converter.getOperands() + "\n");
-        areaOut.append("El postfijo es " + postfix.toString() + "\n");
+        areaOut.append("La expresión en prefijo fue:\n " + txtIn.getText() + "\n");
+        areaOut.append("Los operadores encontrados fueron:\n " + converter.getOperators() + "\n");
+        areaOut.append("Los operandos encontrados fueron:\n " + converter.getOperands() + "\n");
+        areaOut.append("La notación en postfijo es:\n" + postfix.toString() + "\n\n");
         
     }//GEN-LAST:event_btnStartActionPerformed
 

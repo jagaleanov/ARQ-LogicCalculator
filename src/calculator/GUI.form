@@ -128,7 +128,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Puede utilizar los operandos p, q, r, s y t"/>
+        <Property name="text" type="java.lang.String" value="Puede utilizar los operandos p, q, r, s y t."/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">

@@ -86,10 +86,10 @@ public class PostfixConverter {
     public int priority(String ch) {
         int res = 0;
         switch (ch) {
-            case "~":
+            case ")":
                 res = 5;
                 break;
-            case ")":
+            case "~":
                 res = 4;
                 break;
             case "&":

@@ -123,6 +123,7 @@ public class GUI extends javax.swing.JFrame {
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         PostfixConverter converter = new PostfixConverter();
         Queue postfix = converter.toPostfix(txtIn.getText());
+        areaOut.append("/*---------------------------------------------------*/\n");
         areaOut.append("La expresión en prefijo fue:\n " + txtIn.getText() + "\n");
         areaOut.append("Los operadores encontrados fueron:\n " + converter.getOperators() + "\n");
         areaOut.append("Los operandos encontrados fueron:\n " + converter.getOperands() + "\n");

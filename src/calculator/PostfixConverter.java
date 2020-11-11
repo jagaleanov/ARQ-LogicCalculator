@@ -4,18 +4,17 @@ import javax.swing.JOptionPane;
 
 public class PostfixConverter {
 
-    public Queue operators;
-    public Queue operands;
+    public Queue operatorsList;
+    public Queue operandsList;
 
     public Queue toPostfix(String infix) {
 
         infix += ')';
-        operators = new Queue();
-        operands = new Queue();
+        operatorsList = new Queue();
+        operandsList = new Queue();
         Queue postfix = new Queue();//cola que almacenara el resultado final
         Stack temp = new Stack();//pila temporal
-        String number = "";//string q almacena temporalmente los operandos y permite
-        //operar numeros de varios digitos o reales
+        String operands = "";//string q almacena temporalmente los operandos
         temp.push("(");
         
         boolean next = true;
@@ -24,21 +23,21 @@ public class PostfixConverter {
             char ch = infix.charAt(i);
             switch (ch) {//segun el caracter
                 case '('://si es parentesis inicial
-                    if (!number.equals("")) {//si hay operando almacenado en el string 
-                        postfix.add(number);//se envian a la cola final
-                        number = "";//y se limpia el string
+                    if (!operands.equals("")) {//si hay operando almacenado en el string 
+                        postfix.add(operands);//se envian a la cola final
+                        operands = "";//y se limpia el string
                     }
                     temp.push(ch + "");//se añade el caracter en la pila temporal
-                    operators.add(ch + "");
+                    operatorsList.add(ch + "");
                     break;
                 case '&':
                 case '~':
                 case '|':
                 case '>':
                 case '='://si es cualquier operador
-                    if (!number.equals("")) {//si hay operando almacenado en el string 
-                        postfix.add(number);//se envian a la cola final
-                        number = "";//y se limpia el string
+                    if (!operands.equals("")) {//si hay operando almacenado en el string 
+                        postfix.add(operands);//se envian a la cola final
+                        operands = "";//y se limpia el string
                     }
 
                     while (priority(ch + "") <= priority(temp.nextPop())) {
@@ -46,12 +45,12 @@ public class PostfixConverter {
                         postfix.add(temp.pop());//lleve los operandos de la pila temporal a la cola final
                     }
                     temp.push(ch + "");//e ingresa la division en la pila temporal
-                    operators.add(ch + "");
+                    operatorsList.add(ch + "");
                     break;
                 case ')'://si es parentesis final
-                    if (!number.equals("")) {//si hay operando almacenado en el string 
-                        postfix.add(number);//se envian a la cola final
-                        number = "";//y se limpia el string
+                    if (!operands.equals("")) {//si hay operando almacenado en el string 
+                        postfix.add(operands);//se envian a la cola final
+                        operands = "";//y se limpia el string
                     }
                     while (!temp.nextPop().equals("(")) {//mientras no encuentre otreo parentesis anidado
                         postfix.add(temp.pop());//llevar los operadores de la pila temporal a la cola real
@@ -59,7 +58,7 @@ public class PostfixConverter {
                     temp.pop();
 
                     if (i < infix.length() - 1) {
-                        operators.add(ch + "");
+                        operatorsList.add(ch + "");
                     }
 
                     break;
@@ -68,8 +67,8 @@ public class PostfixConverter {
                 case 'r':
                 case 's':
                 case 't':
-                    number += ch;//si es un operando concatenarlo en el string de número hasta tenerlo completo
-                    operands.add(ch + "");
+                    operands += ch;//si es un operando concatenarlo en el string de número hasta tenerlo completo
+                    operandsList.add(ch + "");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Se encontraron caractéres incorrectos en la expresión");
@@ -79,7 +78,7 @@ public class PostfixConverter {
         }
 
         //System.out.print("Postfijo: ");
-        postfix.print();
+        //postfix.print();
         return postfix;
     }
 
@@ -108,10 +107,10 @@ public class PostfixConverter {
     }
 
     public String getOperators() {
-        return operators.toString();
+        return operatorsList.toString();
     }
 
     public String getOperands() {
-        return operands.toString();
+        return operandsList.toString();
     }
 }

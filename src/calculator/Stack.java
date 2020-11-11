@@ -26,7 +26,7 @@ public class Stack {
     public String pop() {
 
         Node removed = head;
-        print();
+        //print();
         Node next = head.getNext();
 
         head = next;

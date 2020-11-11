@@ -1,5 +1,7 @@
 package calculator;
 
+import javax.swing.JOptionPane;
+
 public class PostfixConverter {
 
     public Queue operators;
@@ -14,9 +16,11 @@ public class PostfixConverter {
         Stack temp = new Stack();//pila temporal
         String number = "";//string q almacena temporalmente los operandos y permite
         //operar numeros de varios digitos o reales
-
         temp.push("(");
-        for (int i = 0; i < infix.length(); i++) {//por cada caracter en el string
+        
+        boolean next = true;
+        int i = 0;
+        while(next == true && i < infix.length()){
             char ch = infix.charAt(i);
             switch (ch) {//segun el caracter
                 case '('://si es parentesis inicial
@@ -59,13 +63,22 @@ public class PostfixConverter {
                     }
 
                     break;
-                default:
+                case 'p':
+                case 'q':
+                case 'r':
+                case 's':
+                case 't':
                     number += ch;//si es un operando concatenarlo en el string de número hasta tenerlo completo
                     operands.add(ch + "");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Se encontraron caractéres incorrectos en la expresión");
+                    next = false;
             }
+            i++;
         }
 
-        System.out.print("Postfijo: ");
+        //System.out.print("Postfijo: ");
         postfix.print();
         return postfix;
     }

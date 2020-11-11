@@ -57,7 +57,7 @@ public class GUI extends javax.swing.JFrame {
 
         jLabel7.setText("= (doble implicación)");
 
-        jLabel8.setText("() (agrupación)");
+        jLabel8.setText("( ) (agrupación)");
 
         jLabel9.setText("~ (negación)");
 

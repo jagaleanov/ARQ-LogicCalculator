@@ -1,8 +1,5 @@
 package calculator;
 
-import calculator.PostfixConverter;
-import calculator.Queue;
-
 public class GUI extends javax.swing.JFrame {
 
     public GUI() {
@@ -29,6 +26,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,15 +41,15 @@ public class GUI extends javax.swing.JFrame {
         areaOut.setRows(5);
         jScrollPane3.setViewportView(areaOut);
 
-        jLabel1.setText("Ingrese una expresión lógica en infijo");
+        jLabel1.setText("Ingrese una expresión lógica en infijo.");
 
-        jLabel2.setText("Puede utilizar los operandos p, q, r, s y t.");
+        jLabel2.setText("Utilice los caractéres alfanuméricos, - y _ para construir los nombres de las variables.");
 
-        jLabel3.setText("Puede utilizar los siguientes operadores:");
+        jLabel3.setText("Utilice los siguientes operadores:");
 
         jLabel4.setText("& (conjunción)");
 
-        jLabel5.setText("| (disyución)");
+        jLabel5.setText("| (disyunción)");
 
         jLabel6.setText("> (implicación)");
 
@@ -61,6 +59,8 @@ public class GUI extends javax.swing.JFrame {
 
         jLabel9.setText("~ (negación)");
 
+        jLabel10.setText("Utilice las constantes true y false (palabras reservadas).");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -68,11 +68,12 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(90, 90, 90))
                     .addComponent(txtIn)
+                    .addComponent(btnStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -82,9 +83,9 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel9))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btnStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -94,6 +95,8 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -108,12 +111,12 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -124,9 +127,10 @@ public class GUI extends javax.swing.JFrame {
         PostfixConverter converter = new PostfixConverter();
         Queue postfix = converter.toPostfix(txtIn.getText());
         areaOut.append("/*---------------------------------------------------*/\n");
-        areaOut.append("La expresión en prefijo fue:\n " + txtIn.getText() + "\n");
+        areaOut.append("La expresión en infijo fue:\n " + txtIn.getText() + "\n");
         areaOut.append("Los operadores encontrados fueron:\n " + converter.getOperators() + "\n");
-        areaOut.append("Los operandos encontrados fueron:\n " + converter.getOperands() + "\n");
+        areaOut.append("Las variables encontradas fueron:\n " + converter.getVars() + "\n");
+        areaOut.append("Las constantes encontradas fueron:\n " + converter.getConstants() + "\n");
         areaOut.append("La notación en postfijo es:\n" + postfix.toString() + "\n\n");
         
     }//GEN-LAST:event_btnStartActionPerformed
@@ -168,6 +172,7 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JTextArea areaOut;
     public javax.swing.JButton btnStart;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

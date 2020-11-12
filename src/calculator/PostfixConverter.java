@@ -5,73 +5,117 @@ import javax.swing.JOptionPane;
 public class PostfixConverter {
 
     public Queue operatorsList;
-    public Queue operandsList;
+    public Queue varsList;
+    public Queue constantsList;
 
     public Queue toPostfix(String infix) {
 
         infix += ')';
         operatorsList = new Queue();
-        operandsList = new Queue();
+        varsList = new Queue();
+        constantsList = new Queue();
         Queue postfix = new Queue();//cola que almacenara el resultado final
-        Stack temp = new Stack();//pila temporal
-        String operands = "";//string q almacena temporalmente los operandos
-        temp.push("(");
-        
+        Stack stackTemp = new Stack();//pila temporal
+        String operands = "";//string q almacena temporalmente los operandos hasta completarlos
+        String operators = "";//string q almacena temporalmente los operadores hasta completarlos
+        stackTemp.push("(");
+
         boolean next = true;
         int i = 0;
-        while(next == true && i < infix.length()){
+        while (next == true && i < infix.length()) {
             char ch = infix.charAt(i);
             switch (ch) {//segun el caracter
-                case '('://si es parentesis inicial
+                case ' ':
+                    break;
+                case '('://si es parentesis de apertura
                     if (!operands.equals("")) {//si hay operando almacenado en el string 
-                        postfix.add(operands);//se envian a la cola final
+                        postfix.add(operands);//se envia a la cola del postfijo
+                        this.clasifyOperand(operands);//se envia a las listas de clasificación
                         operands = "";//y se limpia el string
                     }
-                    temp.push(ch + "");//se añade el caracter en la pila temporal
-                    operatorsList.add(ch + "");
+                    stackTemp.push(ch + "");//se añade el caracter en la pila temporal
+                    operatorsList.add(String.valueOf(ch));
                     break;
-                case '&':
+                case '&':// && and
+                case '|':// || or
+                case '>':// -> then
+                case '=':// <->
+
                 case '~':
-                case '|':
-                case '>':
-                case '='://si es cualquier operador
                     if (!operands.equals("")) {//si hay operando almacenado en el string 
                         postfix.add(operands);//se envian a la cola final
+                        this.clasifyOperand(operands);
                         operands = "";//y se limpia el string
                     }
 
-                    while (priority(ch + "") <= priority(temp.nextPop())) {
+                    while (priority(ch + "") <= priority(stackTemp.nextPop())) {
                         //mientras el operando en el caracter tenga menor prioridad que los operandos en la pila temporal
-                        postfix.add(temp.pop());//lleve los operandos de la pila temporal a la cola final
+                        postfix.add(stackTemp.pop());//lleve los operandos de la pila temporal a la cola final
                     }
-                    temp.push(ch + "");//e ingresa la division en la pila temporal
-                    operatorsList.add(ch + "");
+                    stackTemp.push(ch + "");//e ingresa la division en la pila temporal
+                    operatorsList.add(String.valueOf(ch));
                     break;
-                case ')'://si es parentesis final
+                case ')'://si es parentesis de cierre
                     if (!operands.equals("")) {//si hay operando almacenado en el string 
                         postfix.add(operands);//se envian a la cola final
+                        this.clasifyOperand(operands);
                         operands = "";//y se limpia el string
                     }
-                    while (!temp.nextPop().equals("(")) {//mientras no encuentre otreo parentesis anidado
-                        postfix.add(temp.pop());//llevar los operadores de la pila temporal a la cola real
+                    while (!stackTemp.nextPop().equals("(")) {//mientras no encuentre otreo parentesis anidado
+                        postfix.add(stackTemp.pop());//llevar los operadores de la pila temporal a la cola real
                     }
-                    temp.pop();
+                    stackTemp.pop();
 
                     if (i < infix.length() - 1) {
-                        operatorsList.add(ch + "");
+                        operatorsList.add(String.valueOf(ch));
                     }
 
                     break;
+                case 'a':
+                case 'b':
+                case 'c':
+                case 'd':
+                case 'e':
+                case 'f':
+                case 'g':
+                case 'h':
+                case 'i':
+                case 'j':
+                case 'k':
+                case 'l':
+                case 'm':
+                case 'n':
+                case 'ñ':
+                case 'o':
                 case 'p':
                 case 'q':
                 case 'r':
                 case 's':
                 case 't':
+                case 'u':
+                case 'v':
+                case 'w':
+                case 'x':
+                case 'y':
+                case 'z':
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                case '_':
+                case '-':
                     operands += ch;//si es un operando concatenarlo en el string de número hasta tenerlo completo
-                    operandsList.add(ch + "");
+                    //operandsList.add(ch + "");
                     break;
+
                 default:
-                    JOptionPane.showMessageDialog(null, "Se encontraron caractéres incorrectos en la expresión");
+                    JOptionPane.showMessageDialog(null, "Se encontraron caractéres inválidos en la expresión.");
                     next = false;
             }
             i++;
@@ -80,6 +124,18 @@ public class PostfixConverter {
         //System.out.print("Postfijo: ");
         //postfix.print();
         return postfix;
+    }
+
+    public void clasifyOperand(String operand) {
+        switch (operand) {
+            case "true":
+            case "false":
+                this.constantsList.add(operand);
+                break;
+            default:
+                this.varsList.add(operand);
+                break;
+        }
     }
 
     public int priority(String ch) {
@@ -110,7 +166,11 @@ public class PostfixConverter {
         return operatorsList.toString();
     }
 
-    public String getOperands() {
-        return operandsList.toString();
+    public String getVars() {
+        return varsList.toString();
+    }
+
+    public String getConstants() {
+        return constantsList.toString();
     }
 }

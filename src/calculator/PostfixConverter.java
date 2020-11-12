@@ -16,8 +16,8 @@ public class PostfixConverter {
         constantsList = new Queue();
         Queue postfix = new Queue();//cola que almacenara el resultado final
         Stack stackTemp = new Stack();//pila temporal
-        String operands = "";//string q almacena temporalmente los operandos hasta completarlos
-        String operators = "";//string q almacena temporalmente los operadores hasta completarlos
+        String operand = "";//string q almacena temporalmente los operandos hasta completarlos
+        //String operators = "";//string q almacena temporalmente los operadores hasta completarlos
         stackTemp.push("(");
 
         boolean next = true;
@@ -28,12 +28,12 @@ public class PostfixConverter {
                 case ' ':
                     break;
                 case '('://si es parentesis de apertura
-                    if (!operands.equals("")) {//si hay operando almacenado en el string 
-                        postfix.add(operands);//se envia a la cola del postfijo
-                        this.clasifyOperand(operands);//se envia a las listas de clasificación
-                        operands = "";//y se limpia el string
+                    if (!operand.equals("")) {//si hay operando almacenado en el string 
+                        postfix.add(operand);//se envia a la cola del postfijo
+                        this.clasifyOperand(operand);//se envia a las listas de clasificación
+                        operand = "";//y se limpia el string
                     }
-                    stackTemp.push(ch + "");//se añade el caracter en la pila temporal
+                    stackTemp.push(String.valueOf(ch));//se añade el caracter en la pila temporal
                     operatorsList.add(String.valueOf(ch));
                     break;
                 case '&':// && and
@@ -42,24 +42,24 @@ public class PostfixConverter {
                 case '=':// <->
 
                 case '~':
-                    if (!operands.equals("")) {//si hay operando almacenado en el string 
-                        postfix.add(operands);//se envian a la cola final
-                        this.clasifyOperand(operands);
-                        operands = "";//y se limpia el string
+                    if (!operand.equals("")) {//si hay operando almacenado en el string 
+                        postfix.add(operand);//se envian a la cola final
+                        this.clasifyOperand(operand);
+                        operand = "";//y se limpia el string
                     }
 
-                    while (priority(ch + "") <= priority(stackTemp.nextPop())) {
+                    while (priority(String.valueOf(ch)) <= priority(stackTemp.nextPop())) {
                         //mientras el operando en el caracter tenga menor prioridad que los operandos en la pila temporal
                         postfix.add(stackTemp.pop());//lleve los operandos de la pila temporal a la cola final
                     }
-                    stackTemp.push(ch + "");//e ingresa la division en la pila temporal
+                    stackTemp.push(String.valueOf(ch));//e ingresa la division en la pila temporal
                     operatorsList.add(String.valueOf(ch));
                     break;
                 case ')'://si es parentesis de cierre
-                    if (!operands.equals("")) {//si hay operando almacenado en el string 
-                        postfix.add(operands);//se envian a la cola final
-                        this.clasifyOperand(operands);
-                        operands = "";//y se limpia el string
+                    if (!operand.equals("")) {//si hay operando almacenado en el string 
+                        postfix.add(operand);//se envian a la cola final
+                        this.clasifyOperand(operand);
+                        operand = "";//y se limpia el string
                     }
                     while (!stackTemp.nextPop().equals("(")) {//mientras no encuentre otreo parentesis anidado
                         postfix.add(stackTemp.pop());//llevar los operadores de la pila temporal a la cola real
@@ -110,7 +110,7 @@ public class PostfixConverter {
                 case '9':
                 case '_':
                 case '-':
-                    operands += ch;//si es un operando concatenarlo en el string de número hasta tenerlo completo
+                    operand += ch;//si es un operando concatenarlo en el string de número hasta tenerlo completo
                     //operandsList.add(ch + "");
                     break;
 
